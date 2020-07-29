@@ -1,6 +1,9 @@
 import React from 'react';
 import TodoButton from './Button';
 import TodoListInput from './Input';
+import List from './List';
+import ListWithHeader from './ListwithHeader';
+import ListwithHeader from './ListwithHeader';
 
 class TodoList extends React.Component{
     constructor(props){
@@ -10,68 +13,61 @@ class TodoList extends React.Component{
             list:[],
         
         }
-
-        // this.changeInput = this.changeInput.bind(this);
     }
+
     changeInput = (input) => {
         this.setState({
             userInput:input
         })
     }
 
-    addToList(input, status){
+    addToList = () => {
+        const input = this.state.userInput;
+        const status = 'todo';
         let listArray = this.state.list;
         if(input === '')
             return ;
         listArray.push({id:listArray.length, itemes:input, status:status});
 
-        this.setState(
-            {list:listArray,
-            userInput:''}
-            );
+        this.setState({list:listArray});
+        this.changeInput('');
     }
-    updateList(id, status){
+    updateList = (id, status) => {
         let listUpdate = this.state.list;
         listUpdate[id].status = status;
 
         this.setState({
-            list:listUpdate, 
-            userInput:'',
-        }, ()=> this.displayLog(this.state.list) );
-
+            list:listUpdate
+        });
+        this.changeInput('');
     }
 
-    displayLog(input){
-        console.log(input);
-    }
 
     render(){
+        const listTodo = this.state.list.filter((val)=> val.status =='todo');
+        const listCompleted = this.state.list.filter((val)=> val.status =='completed');
+        const buttonPropsTodo = {value: 'Completed', onClick: this.updateList, update_type:'completed'};
+        const buttonPropsCompleted = {value: 'Undo', onClick: this.updateList, update_type:'todo'};
+
         return(
                 <div>
-                    <TodoListInput onChange={this.changeInput} value={this.state.userInput}/>
+                    <TodoListInput onChange={this.changeInput} value={this.state.userInput} />
+                    <TodoButton value='Add' onClick={this.addToList} />
 
-                    <TodoButton value='Add' onClick= {() => this.addToList(this.state.userInput, 'todo')} />
+                    <ListwithHeader 
+                        headerVal='Todo...'
+                        list={listTodo}
+                        buttonComponent={TodoButton}
+                        buttonProps={buttonPropsTodo}
+                    />
 
-                    <h2>Todo...</h2>
-                    <ul>
-                      {this.state.list.filter((val)=> val.status =='todo').map((val, index) =>
-                                <li key={index}>
-                                    {val.itemes}
-                                    <TodoButton value='Completed' onClick={() =>this.updateList(val.id, 'completed')} />
-                                </li>
-                            )}
-                    </ul>
-                    <h2>Completed..</h2>
-                    <ul>
-                        {this.state.list.filter((val) => val.status == 'completed').map((val, index)=> 
+                    <ListwithHeader 
+                        headerVal='Completed...'
+                        list={listCompleted}
+                        buttonComponent={TodoButton}
+                        buttonProps={buttonPropsCompleted}
+                    />
 
-                        <li key={index}>
-                            {val.itemes}
-                            <TodoButton value='Undo' onClick={() => this.updateList(val.id, 'todo')}/>
-                        </li>
-                        )}
-                    </ul>
-                
                 </div>
             );
     }
