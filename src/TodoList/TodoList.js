@@ -1,4 +1,6 @@
 import React from 'react';
+import TodoButton from './Button';
+import TodoListInput from './Input';
 
 class TodoList extends React.Component{
     constructor(props){
@@ -8,8 +10,10 @@ class TodoList extends React.Component{
             list:[],
         
         }
+
+        // this.changeInput = this.changeInput.bind(this);
     }
-    changeInput(input){
+    changeInput = (input) => {
         this.setState({
             userInput:input
         })
@@ -17,6 +21,8 @@ class TodoList extends React.Component{
 
     addToList(input, status){
         let listArray = this.state.list;
+        if(input === '')
+            return ;
         listArray.push({id:listArray.length, itemes:input, status:status});
 
         this.setState(
@@ -30,7 +36,7 @@ class TodoList extends React.Component{
 
         this.setState({
             list:listUpdate, 
-            userInput:''
+            userInput:'',
         }, ()=> this.displayLog(this.state.list) );
 
     }
@@ -42,19 +48,16 @@ class TodoList extends React.Component{
     render(){
         return(
                 <div>
-                    <input 
-                        onChange={(e) => this.changeInput(e.target.value)}
-                        placeholder = 'Type text'
-                        value = {this.state.userInput}
-                        type = "text"
-                    />
-                    <button onClick = {() => this.addToList(this.state.userInput, 'todo')}>Add</button>
+                    <TodoListInput onChange={this.changeInput} value={this.state.userInput}/>
+
+                    <TodoButton value='Add' onClick= {() => this.addToList(this.state.userInput, 'todo')} />
+
                     <h2>Todo...</h2>
                     <ul>
                       {this.state.list.filter((val)=> val.status =='todo').map((val, index) =>
                                 <li key={index}>
                                     {val.itemes}
-                                    <button id={index} onClick={() =>this.updateList(val.id, 'completed')}>Completed</button>
+                                    <TodoButton value='Completed' onClick={() =>this.updateList(val.id, 'completed')} />
                                 </li>
                             )}
                     </ul>
@@ -64,7 +67,7 @@ class TodoList extends React.Component{
 
                         <li key={index}>
                             {val.itemes}
-                            <button onClick={()=>this.updateList(val.id, 'todo')}>Undo</button>
+                            <TodoButton value='Undo' onClick={() => this.updateList(val.id, 'todo')}/>
                         </li>
                         )}
                     </ul>
