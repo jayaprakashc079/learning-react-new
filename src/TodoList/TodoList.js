@@ -1,9 +1,8 @@
 import React from 'react';
 import TodoButton from './Button';
 import TodoListInput from './Input';
-import List from './List';
-import ListWithHeader from './ListwithHeader';
 import ListwithHeader from './ListwithHeader';
+import {reactLocalStorage} from 'reactjs-localstorage';
 
 class TodoList extends React.Component{
     constructor(props){
@@ -14,7 +13,7 @@ class TodoList extends React.Component{
         
         }
     }
-
+    
     changeInput = (input) => {
         this.setState({
             userInput:input
@@ -22,6 +21,7 @@ class TodoList extends React.Component{
     }
 
     addToList = () => {
+        
         const input = this.state.userInput;
         const status = 'todo';
         let listArray = this.state.list;
@@ -29,17 +29,27 @@ class TodoList extends React.Component{
             return ;
         listArray.push({id:listArray.length, itemes:input, status:status});
 
-        this.setState({list:listArray});
+        this.setState({list:listArray}, localStorage.setItem("todos", JSON.stringify(this.state.list)));
+        
         this.changeInput('');
     }
-    updateList = (id, status) => {
+    updateList =  (id, status) => {
         let listUpdate = this.state.list;
         listUpdate[id].status = status;
 
-        this.setState({
-            list:listUpdate
-        });
+         this.setState({list:listUpdate}, ()=>localStorage.setItem("todos", JSON.stringify(this.state.list)));
+        
         this.changeInput('');
+    }
+    componentWillMount = () => {
+        const todos = localStorage.getItem('todos');
+        if (todos){
+            const savedTodos = JSON.parse(todos);
+            this.setState({
+                list:savedTodos
+            })
+        }
+
     }
 
 
