@@ -1,4 +1,5 @@
 import React from 'react';
+import './Style.css';
 
 class List extends React.Component{
     
@@ -9,7 +10,7 @@ class List extends React.Component{
             <div>
                 <ul>
                     {this.props.list.map((val , index) => 
-                    <li key={index}>
+                    <li key={index} className="tab">
                         {val.itemes}
                         {
                             Button &&

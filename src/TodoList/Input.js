@@ -14,7 +14,7 @@ class Input extends React.Component{
     render(){
         return(
             <input 
-                onChange={this.onChangefun}
+                onChange={(e)=> this.props.onChange(e.target.value)}
                 placeholder='Type text'
                 type='text'
                 value={this.props.value}

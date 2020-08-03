@@ -1,0 +1,53 @@
+Tab1              Tab2        Tab3 
+Content
+
+
+
+[{
+    name: tab1,
+    content: {
+               Id: 1
+               items:123
+               status:Completed
+
+                }
+}, 
+{
+    name: tab2,
+    content: content2
+}, 
+{
+    name: tab3,
+    content: conten3
+}]
+
+
+<MagicComponent
+    config={config}
+    defaultTab={tab3}
+/> 
+
+
+class X {
+
+onNewTabClick() {
+    console.log("I got clickc");
+}
+
+onTabClick(tabname) {
+    return onNewTabClick;
+}
+
+render() {
+    return() {
+        config.map((value) => {
+                <div onClick={this.onTabclick(value.name)}> Tab1 </div>
+                {this.state.saved === value.name && 
+                    <div> conten1 </div>
+                }
+        })
+            
+    }
+
+}
+}
