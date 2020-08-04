@@ -4,6 +4,7 @@ import TodoListInput from './Input';
 import ListwithHeader from './ListwithHeader';
 import SaveList from './SaveList';
 import './Style.css'
+import Tab from './Tabs';
 
 class TodoList extends React.Component{
     constructor(props){
@@ -12,6 +13,8 @@ class TodoList extends React.Component{
             userInput:'',
             list:[],
             todoContent:[],
+            config:[],
+            savedState:''
         }
      this.service = new SaveList();   
     }
@@ -51,9 +54,9 @@ class TodoList extends React.Component{
     }
     componentDidMount = () => {
         const savedTodos = this.service.getList('todos');
-            this.setState({list:savedTodos || []})
+            this.setState({savedState:'TODO', list:savedTodos || []})
     }
-    
+ 
     render(){
         const listTodo = this.state.list.filter((val)=> val.status =='todo');
         const listCompleted = this.state.list.filter((val)=> val.status =='completed');
@@ -64,27 +67,25 @@ class TodoList extends React.Component{
                 <div>
                     <TodoListInput onChange={this.changeInput} value={this.state.userInput} />
                     <TodoButton value='Add' onClick={this.addToList} />
-                    <div className="tab">
-                        <div className="tabTodo"> 
-                        <ListwithHeader 
-                            headerVal='Todo...'
-                            list={listTodo}
-                            buttonComponent={TodoButton}
-                            buttonProps={buttonPropsTodo}
-                        />
-                        </div>
-                        <div className="tabTodo"> 
-                        <ListwithHeader 
-                            headerVal='Completed...'
-                            list={listCompleted}
-                            buttonComponent={TodoButton}
-                            buttonProps={buttonPropsCompleted}
-                        /> 
-                        </div>
-                       
-                        
-                    </div>
 
+                    <Tab 
+                        config={[{
+                            name: "TODO",
+                            content: (<ListwithHeader 
+                                    list={listTodo}
+                                    buttonComponent={TodoButton}
+                                    buttonProps={buttonPropsTodo}
+                                />)
+                        }, {
+                            name: "Completed", 
+                            content:( <ListwithHeader 
+                                list={listCompleted}
+                                buttonComponent={TodoButton}
+                                buttonProps={buttonPropsCompleted}
+                            />                             )
+                        }]}
+                        initTab={this.state.savedState}
+                    />
                 </div>
             );
     }
