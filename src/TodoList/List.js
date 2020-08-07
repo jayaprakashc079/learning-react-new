@@ -10,13 +10,13 @@ class List extends React.Component{
             <div>
                 <ul>
                     {this.props.list.map((val , index) => 
-                    <li key={index} className="tab">
+                    <li key={index} className='tab'>
                         {val.itemes}
                         {
                             Button &&
                             <Button
                                 value={buttonProps.value}
-                                onClick={() => buttonProps.onClick(val.id, buttonProps.update_type)}
+                                onClick={() => buttonProps.onClick(val.id, val.status, buttonProps.update_type)}
                             />
                         }               
                     </li>

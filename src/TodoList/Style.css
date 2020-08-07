@@ -1,6 +1,23 @@
 
 .tab{
     display: flex;
+    list-style: none;
+    width: 25%;
+    justify-content: space-between;
+    margin-top: 30px;
+}
+
+.tab-item {
+  border: 1px solid black;
+  padding: 5px;
+  cursor: pointer;
+  width: 90px;
+  text-align: center;
+  border-radius: 5px;
+}
+
+.tab-item:hover {
+  background-color:  #ff5733 ;
 }
   .tabTodo{
     height: auto;
@@ -11,5 +28,20 @@
   .button{
       height: 25px;
       width: 120px;
+  }
+
+  .nav-links{
+    display: flex;
+    list-style: none;
+    width: 50%;
+    align-items: center;
+  }
+
+  .selected{
+    color: red;
+  }
+
+  .notSelected{
+    color: green;
   }
   

@@ -6,7 +6,11 @@ class Button extends React.Component{
     render(){
         var x = 0;
         return(
-        <div className='tab-item' onClick={this.props.onClick}>{this.props.value}</div>
+        <button className='button' 
+                onClick={this.props.onClick}
+        >
+            {this.props.value}
+        </button>
         );
     }
 }

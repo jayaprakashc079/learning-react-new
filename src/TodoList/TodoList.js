@@ -5,6 +5,7 @@ import ListwithHeader from './ListwithHeader';
 import SaveList from './SaveList';
 import './Style.css'
 import Tab from './Tabs';
+import { BrowserRouter, Router } from 'react-router-dom';
 
 class TodoList extends React.Component{
     constructor(props){
@@ -12,8 +13,6 @@ class TodoList extends React.Component{
         this.state = {
             userInput:'',
             list:[],
-            todoContent:[],
-            config:[],
             savedState:''
         }
      this.service = new SaveList();   
@@ -21,56 +20,65 @@ class TodoList extends React.Component{
 
     changeInput = (input) => {
         this.setState({
-            userInput:input
+            userInput:input,
         })
     }
 
     addToList =  () => {
         
         const input = this.state.userInput;
-        const status = 'todo';
+        const status = 'Todo';
         let listArray = this.state.list;
         if(input === '')
             return ;
         listArray.push({id:listArray.length, itemes:input, status:status});
 
          this.setState({
-             list:listArray}, 
+             list:listArray,
+            }, 
              ()=> this.service.setList("todos", this.state.list)
              );
         
         
         this.changeInput('');
     }
-    updateList =  (id, status) => {
+    updateList =  (id, tab, status) => {
         let listUpdate = this.state.list;
         listUpdate[id].status = status;
 
-         this.setState(
-             {list:listUpdate}, 
+         this.setState({
+                        list:listUpdate,
+                        savedState:tab
+        }, 
             () => this.service.setList("todos", this.state.list));
         
         this.changeInput('');
     }
     componentDidMount = () => {
+        console.log(this.props)
         const savedTodos = this.service.getList('todos');
-            this.setState({savedState:'TODO', list:savedTodos || []})
+            this.setState({savedState:this.props.match.params.Tab, list:savedTodos || []})
     }
  
-    render(){
-        const listTodo = this.state.list.filter((val)=> val.status =='todo');
-        const listCompleted = this.state.list.filter((val)=> val.status =='completed');
-        const buttonPropsTodo = {value: 'Completed', onClick: this.updateList, update_type:'completed'};
-        const buttonPropsCompleted = {value: 'Undo', onClick: this.updateList, update_type:'todo'};
+    changeTab=(tabName)=>{
+        this.props.history.push(`/${tabName}`)
+    }
 
+
+    render(){
+        const listTodo = this.state.list.filter((val)=> val.status =='Todo');
+        const listCompleted = this.state.list.filter((val)=> val.status =='Completed');
+        const buttonPropsTodo = {value: 'Completed', onClick: this.updateList, update_type:'Completed'};
+        const buttonPropsCompleted = {value: 'Undo', onClick: this.updateList, update_type:'Todo'};
+        
         return(
                 <div>
                     <TodoListInput onChange={this.changeInput} value={this.state.userInput} />
                     <TodoButton value='Add' onClick={this.addToList} />
 
-                    <Tab 
+                   { <Tab 
                         config={[{
-                            name: "TODO",
+                            name: "Todo",
                             content: (<ListwithHeader 
                                     list={listTodo}
                                     buttonComponent={TodoButton}
@@ -85,10 +93,14 @@ class TodoList extends React.Component{
                             />                             )
                         }]}
                         initTab={this.state.savedState}
-                    />
+                        onClick={this.changeTab}
+                    />}
+
                 </div>
             );
     }
 }
+
+
 
 export default TodoList;
