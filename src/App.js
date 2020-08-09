@@ -7,7 +7,8 @@ import RashanCard from './RashanCard';
 //import Game from './Components/Game';
 //import Game from './TicTocGame';
 import TodoList from './TodoList/TodoList';
-import {BrowserRouter as Router, Route}  from 'react-router-dom'
+import {BrowserRouter as Router, Route}  from 'react-router-dom';
+import TodoApp from './TodoApp/TodoApp';
 
 function App() {
   
@@ -22,10 +23,14 @@ function App() {
         
         <Tabs></Tabs>
         */}
-        <Router>
+       {/*<Router>
+        <Route path="/" exact component={TodoList}></Route>
           <Route path="/:Tab" exact component={TodoList}></Route>
-        </Router>
-        
+       </Router>*/} 
+       <Router>
+         <Route path='/' exact component={TodoApp}></Route>
+         <Route path="/:Tab" exact component={TodoApp}></Route>
+       </Router>
       </header>
     </div>
   );

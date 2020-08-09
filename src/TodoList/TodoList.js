@@ -57,7 +57,8 @@ class TodoList extends React.Component{
     componentDidMount = () => {
         console.log(this.props)
         const savedTodos = this.service.getList('todos');
-            this.setState({savedState:this.props.match.params.Tab, list:savedTodos || []})
+            this.setState({savedState:this.props.match.params.Tab?this.props.match.params.Tab :'Todo'
+                , list:savedTodos || []})
     }
  
     changeTab=(tabName)=>{
@@ -70,7 +71,7 @@ class TodoList extends React.Component{
         const listCompleted = this.state.list.filter((val)=> val.status =='Completed');
         const buttonPropsTodo = {value: 'Completed', onClick: this.updateList, update_type:'Completed'};
         const buttonPropsCompleted = {value: 'Undo', onClick: this.updateList, update_type:'Todo'};
-        
+
         return(
                 <div>
                     <TodoListInput onChange={this.changeInput} value={this.state.userInput} />
