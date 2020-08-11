@@ -1,10 +1,10 @@
 import React from 'react';
 import Input from './Input';
-import Button from './Button';
-import List from './List';
-import Tabs from './Tabs';
+import List from './SpacingGrid';
+import Tabs from './TodoTabs';
 import SaveList from './SaveList';
 import _ from 'lodash';
+import Form from './Form';
 
 class TodoApp extends React.Component{
     constructor(props){
@@ -18,33 +18,13 @@ class TodoApp extends React.Component{
         this.service = new SaveList();
     }
 
-    getUserInput=(inputVal)=>{
-        this.setState({
-            userInput:inputVal,
-        })
-    }
+    updateList =(id, updateType) =>{
+        let listArray = this.state.list;
+        listArray[id].status =updateType;
 
-    AddList =()=>{
-        let listArray= this.state.list;
-        _.concat(listArray, {
-            Id:listArray.length,
-            value:this.state.userInput,
-            status:'Todo'
-        })
-        
         this.setState({
             list:listArray
         }, this.service.setList('Todos', this.state.list))
-
-        this.getUserInput('');
-    }
-
-    updateList =(id,status, updat)=>{                                                                                                            eType)=>{
-        let listArray = this.state.list;
-        listArray[id].status =updateType;
-        this.setState({
-            list:listArray,
-        }, this.service.setList('Todos', this.state.list));
 
     }
 
@@ -62,6 +42,20 @@ class TodoApp extends React.Component{
             savedTab:this.props.match.params.Tab?this.props.match.params.Tab:'Todo',
             list:savedTodos?savedTodos:[]
         }, console.log(this.props))
+    }
+
+    submit=(model)=>{
+
+        let listArray = this.state.list;
+        let list = _.concat(listArray, {
+            ...{id:listArray.length}, 
+            ...model, 
+            ...{status:'Todo'}});
+
+            this.setState({
+                list:list
+            }, this.service.setList('Todos', list))
+
     }
     render(){
         const TodoContent =  <List 
@@ -85,17 +79,20 @@ class TodoApp extends React.Component{
                            content:CompletedContent
                        }
                       ];
+        
         return(
             <>
-                <Input 
-                    label=''
-                    value={this.state.userInput} 
-                    onChange={this.getUserInput}
-                />
-                <Button 
-                    onClick={()=>this.AddList()}
-                    value='Add'
-                />
+                <Form
+                    submit={this.submit}
+                    btnText='Add'
+                >
+                    <Input
+                        name='value'
+                        validationError="Required value" 
+                        label="Todo task.." 
+                        required
+                    />
+                </Form>
                 <Tabs 
                     config={config}
                     onClick={this.changeTab}
