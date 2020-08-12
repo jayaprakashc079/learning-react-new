@@ -5,7 +5,10 @@ import Tabs from './TodoTabs';
 import SaveList from './SaveList';
 import _ from 'lodash';
 import Form from './Form';
-
+import Button from "@material-ui/core/Button";
+import Snackbar from "@material-ui/core/Snackbar";
+import IconButton from "@material-ui/core/IconButton";
+import CloseIcon from "@material-ui/icons/Close";
 
 
 class TodoApp extends React.Component{
@@ -15,6 +18,11 @@ class TodoApp extends React.Component{
             userInput:'',
             list:[],
             savedTab:'',
+            Open:false,
+            msg:'',
+            objToUpdate:'',
+            currentIndex:'',
+            enableUndo:false
         }
 
         this.service = new SaveList();
@@ -25,7 +33,12 @@ class TodoApp extends React.Component{
         listArray[id].status =updateType;
 
         this.setState({
-            list:listArray
+            list:listArray,
+            Open:true,
+            operation:updateType,
+            currentIndex:id,
+            msg:'Task moved to '+ updateType +' list',
+            enableUndo:true
         }, this.service.setList('Todos', this.state.list))
 
     }
@@ -43,7 +56,7 @@ class TodoApp extends React.Component{
         this.setState({
             savedTab:this.props.match.params.Tab?this.props.match.params.Tab:'Todo',
             list:savedTodos?savedTodos:[]
-        }, console.log(this.props))
+        })
     }
 
     submit=(model)=>{
@@ -55,22 +68,43 @@ class TodoApp extends React.Component{
             ...{status:'Todo'}});
 
             this.setState({
-                list:list
+                list:list,
+                Open:true, 
+                currentIndex:listArray.length,
+                msg:'Task moved to Todo list', 
+                enableUndo:false
             }, this.service.setList('Todos', list))
 
     }
+
+    handleClose = () => {
+        this.setState({
+            Open:false
+        })
+      };
+    
+      closeSnikBar=()=>{
+          setTimeout(this.handleClose, 1000);
+      }
+      
     render(){
         const TodoContent =  <List 
                                 list={_.filter(this.state.list,(val)=>val.status=='Todo')}
                                 btnName='Completed'
                                 btnClick={this.updateList}
                                 updateType='Completed'
+                                btnDelName='Delete'
+                                btnDelClick={this.updateList}
+                                updateDelType='Deleted'
                             />
         const CompletedContent= <List 
                                     list={_.filter(this.state.list,(val)=>val.status=='Completed')}
                                     btnName='Undo'
                                     btnClick={this.updateList}
                                     updateType='Todo'
+                                    btnDelName='Delete'
+                                    btnDelClick={this.updateList}
+                                    updateDelType='Deleted'
                                 />
         const config =[{
                         name:'Todo', 
@@ -99,6 +133,39 @@ class TodoApp extends React.Component{
                     config={config}
                     onClick={this.changeTab}
                     initTab={this.state.savedTab}
+                />
+
+                <Snackbar
+                    anchorOrigin={{
+                    vertical: "bottom",
+                    horizontal: "center"
+                    }}
+                    open={this.state.Open}
+                    autoHideDuration={6000}
+                    onClose={this.handleClose}
+                    message={this.state.msg}
+                    action={
+                    <React.Fragment>
+
+
+                        {
+                        this.state.enableUndo && 
+                        <Button 
+                            color="secondary" 
+                            size="small" 
+                            onClick={()=>this.updateList(this.state.currentIndex, this.state.savedTab)}>
+                        UNDO
+                        </Button>}
+                        <IconButton
+                            size="small"
+                            aria-label="close"
+                            color="inherit"
+                            onClick={this.handleClose}
+                            >
+                            <CloseIcon fontSize="small" />
+                        </IconButton>
+                    </React.Fragment>
+                    }
                 />
             </>
 

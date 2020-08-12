@@ -12,7 +12,6 @@ class Input extends React.Component{
         this.state={
             blur:false
         }
-       
     }
 
     componentDidUpdate(prevProps) {

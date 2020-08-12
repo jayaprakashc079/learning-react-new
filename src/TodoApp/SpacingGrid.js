@@ -37,6 +37,9 @@ const Styles = {
                           btnClick={this.props.btnClick}
                           btnName={this.props.btnName}
                           updateType={this.props.updateType}
+                          btnDelClick={this.props.btnDelClick}
+                          btnDelName={this.props.btnDelName}
+                          updateDelType={this.props.updateDelType}
                 />  
                   </Paper>
                 </Grid>

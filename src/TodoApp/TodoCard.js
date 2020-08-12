@@ -46,6 +46,11 @@ class TodoCard extends React.Component{
                                     onClick={()=>this.props.btnClick(this.props.id,this.props.updateType)}
                                     value={this.props.btnName}
                                />
+                               <Button 
+                                    size="small"
+                                    onClick={()=>this.props.btnDelClick(this.props.id,this.props.updateDelType)}
+                                    value={this.props.btnDelName}
+                               />
                             </CardActions>
                         </Card>  
             </>
