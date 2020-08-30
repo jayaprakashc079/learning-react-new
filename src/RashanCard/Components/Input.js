@@ -1,8 +1,6 @@
 import React from 'react';
-import {withFormsy} from 'formsy-react';
 import TextField from '@material-ui/core/TextField';
-
-
+import { withFormsy } from 'formsy-react';
 
 class Input extends React.Component{
 
@@ -34,11 +32,12 @@ class Input extends React.Component{
     }
 
     changeValue=(e)=>{
-        this.props.setValue(e.target.value);
+        this.props.setValue(e.currentTarget.value);
+    }
+    componentDidMount=()=>{
+        this.props.setValue(this.props.defaultValue)
     }
     
-    
-
     render(){
         const errorMessage =this.props.errorMessage;
         return(
@@ -50,12 +49,12 @@ class Input extends React.Component{
                     onChange={this.changeValue}
                     placeholder="Enter text"
                     value={this.props.value || ''} 
+                    defaultValue={this.props.defaultValue}
                     onBlur={this.onBlur}
                     onFocus={this.onFocus}
                     error={this.state.blur && this.props.errorMessage}
                     helperText={this.state.blur && this.props.errorMessage}
                 />
-
             </>
             
         );
