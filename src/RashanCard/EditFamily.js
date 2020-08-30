@@ -44,12 +44,12 @@ class EditFamily extends React.Component{
 
         this.scrolTo();
     }
-
-
+    
     componentDidMount = () =>{
         let savedFamilies = this.service.getList("FamilyList");
        
         let familyList = _.filter(savedFamilies, (val, idx) => idx ==this.props.match.params.id )
+         console.log(_.flattenDeep(familyList));
         let editFamily = [];
         _.map(familyList, (members, idxs) =>
         {

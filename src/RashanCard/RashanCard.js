@@ -39,21 +39,17 @@ class RashanCard extends React.Component{
     }
 
     submit=(model)=>{
-
-        let getPer = [];
-        let setPer = _.concat(getPer, <NewPerson 
-                                            id={getPer.length} 
-                                            key={getPer.length}
-                                            enable={true}/>)
-
         let getFamily = this.state.saveFamily;
        
         let setFamily = _.concat(getFamily, model);
 
         console.log(setFamily);
+        let getPer = [];
+        let setPer = _.concat(getPer, <NewPerson
+                                            enable={true}/>)
         this.setState({
             addPerson:setPer, 
-        }, /*this.service.setList("FamilyList", setFamily)*/)
+        }, this.service.setList("FamilyList", setFamily))
 
     }
 

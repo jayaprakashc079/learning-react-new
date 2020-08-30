@@ -48,7 +48,7 @@ class Input extends React.Component{
                     type='text' 
                     onChange={this.changeValue}
                     placeholder="Enter text"
-                    value={this.props.value || ''} 
+                    value={this.props.value} 
                     defaultValue={this.props.defaultValue}
                     onBlur={this.onBlur}
                     onFocus={this.onFocus}

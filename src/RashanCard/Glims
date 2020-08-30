@@ -1,0 +1,44 @@
+
+
+var list = [{
+    0: {isHead: true},
+    1: [],
+    2: {}
+}, {
+    0: {},
+    1: [],
+    2: {}
+}, {
+    0: {},
+    1: [],
+    2: {}
+}]
+
+
+HEAD 
+   member 1,
+   member 2....
+
+{
+    head: "Name",
+    members: ["", ""]
+}
+
+
+var displayFamily = list.map((family) => {
+    var head = family.find(member => member.isHead);
+    var headMember = head.name;
+    return {
+        head: headMember,
+        members: family.filter(member => member.isHead != true)
+    }
+})
+
+
+{
+    0: va1,
+    1: val2,
+    2: asdfsdaf
+}
+
+[val1, val2]
