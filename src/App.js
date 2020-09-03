@@ -12,6 +12,9 @@ import RashanCard from './RashanCard/RashanCard';
 import ViewFamilies from './RashanCard/ViewFamilies';
 import AllFamily from './RashanCard/AllFamily';
 import EditFamily from './RashanCard/EditFamily';
+import WeatherCard from './WeatherForcast/Components/WeatherCard';
+import Nav from  './RashanCard/Nav';
+import Home from './RashanCard/Home';
 
 function App() {
   
@@ -35,12 +38,17 @@ function App() {
          <Route path="/:Tab" exact component={TodoApp}></Route>
        </Router>*/}
        <Router>
+         <Nav/>
+         <Route path='/' exact component={Home}/>
          <Route path='/Registration' exact component={RashanCard}/>
          <Route path='/ViewFamily' exact component={ViewFamilies}/>
          <Route path='/AllHouseholds' exact component={AllFamily}/>
          <Route path="/:id/EditFamily"  exact component={EditFamily}/>
        </Router>
-
+       <Router>
+         <Route path='/CurrentWeather' exact component={WeatherCard}/>
+         <Route path="/CurrentWeather/zip/:id"  exact component={WeatherCard}/>
+       </Router>
       </header>
     </div>
   );

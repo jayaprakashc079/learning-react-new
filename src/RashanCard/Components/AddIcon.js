@@ -8,10 +8,9 @@ class AddIcon extends React.Component {
 render(){
     return (
         <div  style={{position:"relative"}}>
-          <Fab style={{position:"absolute", right:'0', bottom:'-5px'}} color="primary" aria-label="add" onClick={this.props.onClick}>
+          <Fab style={{position:"absolute", backgroundColor:"#000000", right:'0', bottom:'-5px'}} color="primary" aria-label="add" onClick={this.props.onClick}>
             <Icon />
           </Fab>
-   
         </div>
       );
     }

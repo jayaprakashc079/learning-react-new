@@ -10,7 +10,7 @@ class SimpleContainer extends React.Component{
             <React.Fragment>
               <CssBaseline />
               <Container maxWidth="sm">
-                <Typography align="inherit" component='div' style={{ padding: '10px',    backgroundColor: '#cfe8fc', height: '100%' }} >
+                <Typography align="inherit" component='div' style={{ padding: '25px',    backgroundColor: '#fff8dc', height: '100%' }} >
                     {this.props.children}
                 </Typography>
                 

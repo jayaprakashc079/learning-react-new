@@ -2,6 +2,7 @@ import React from 'react';
 import SaveList from './SaveList';
 import _ from 'lodash';
 import List from './Components/List';
+import './Styles.css';
 
 class ViewFamilies extends React.Component{
 
@@ -37,13 +38,13 @@ class ViewFamilies extends React.Component{
     render(){
 
         return(
-            <>
+            <div >
                 <h2>Family details</h2>
                  <List
                     config={this.state.FamilyList}
                     editFamily={this.editFamily}
                  />
-            </>
+            </div>
         );
     }
 }

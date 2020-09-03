@@ -1,0 +1,24 @@
+nav{
+    background-color:rgb(146, 127, 127);
+    justify-content: center;
+    align-items: center;
+    min-height: 10vh;
+    color:white;
+}
+
+.nav-links{
+    justify-content: space-around;
+    color: white;
+    text-decoration: none;
+    justify-items: right;
+}
+.home{
+    display: flex;
+    justify-content: space-around;
+    background-color:#fff8dc;
+    text-decoration: none;
+}
+
+.linkStyle{
+    color: white;
+}

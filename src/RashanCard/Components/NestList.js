@@ -43,15 +43,15 @@ class NestList extends React.Component{
       aria-labelledby="nested-list-subheader"
       className={classes.root}
     >
-      <ListItem button onClick={this.handleClick}>
+      <ListItem button onClick={this.handleClick} style={{backgroundColor:"#48d1cc"}}>
          <ListItemIcon>
            <InboxIcon />
          </ListItemIcon>
-         <ListItemText primary={familyList.head + " and family"} />
+         <ListItemText style={{paddingTop:"7px"}} primary={familyList.head + " and family"} />
          {this.state.Open ? <ExpandLess /> : <ExpandMore />}
       </ListItem> 
       <EditIcon onClick={()=>this.props.editFamily(this.props.idx)}/>
-      <Collapse in={this.state.Open} timeout="auto" unmountOnExit>
+      <Collapse in={this.state.Open} timeout="auto" unmountOnExit style={{backgroundColor:"lightblue"}}>
          <List component="div" disablePadding>
               <>
               {_.map(familyList.members.map((name)=>
