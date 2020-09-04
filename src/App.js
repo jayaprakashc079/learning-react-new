@@ -12,7 +12,7 @@ import RashanCard from './RashanCard/RashanCard';
 import ViewFamilies from './RashanCard/ViewFamilies';
 import AllFamily from './RashanCard/AllFamily';
 import EditFamily from './RashanCard/EditFamily';
-import WeatherCard from './WeatherForcast/Components/WeatherCard';
+import CurrentWeather from './WeatherForcast/CurrentWeatherCard';
 import Nav from  './RashanCard/Nav';
 import Home from './RashanCard/Home';
 
@@ -46,8 +46,8 @@ function App() {
          <Route path="/:id/EditFamily"  exact component={EditFamily}/>
        </Router>
        <Router>
-         <Route path='/CurrentWeather' exact component={WeatherCard}/>
-         <Route path="/CurrentWeather/zip/:id"  exact component={WeatherCard}/>
+         <Route path='/CurrentWeather' exact component={CurrentWeather}/>
+         <Route path="/CurrentWeather/zip/:id"  exact component={CurrentWeather}/>
        </Router>
       </header>
     </div>

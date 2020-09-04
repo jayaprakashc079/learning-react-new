@@ -4,6 +4,7 @@ import _ from 'lodash';
 import List from './Components/List';
 import './Styles.css';
 
+
 class ViewFamilies extends React.Component{
 
     constructor(props){
